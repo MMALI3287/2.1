@@ -8,38 +8,134 @@
     <meta name="keywords" content="Tabia, Tweet" />
     <meta name="author" content="Musaddique" />
     <title>Tabia Tweet</title>
-    <style>
-        em {
-            font-style: normal;
-        }
-        
-        img {
-            width: 300px;
-            border-radius: 150px;
-            float: left;
-            margin-right: 20px;
-        }
-        
-        p.username {
-            font-weight: bold;
-        }
-        
-        p {
-            font-size: 20px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
-    <img src="images/tabu.jpg" alt="Tabia Morshed Pic" />
+    <header id="main-header">
+        <h1>My Profile</h1>
+    </header>
+    <nav id="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
     <a href="https://www.facebook.com/tabia.morshed.1" target="_blank">
-        <p class="username">@tabiamorshed</p>
+        <img src="images/tabu.jpg" alt="Tabia Morshed Pic" />
     </a>
+
+    <p class="username">@tabiamorshed</p>
+
     <p class="">
-        I am a student at the Ahsanullah University of Science and Technology. I am currently in my senior year and am taking a class called "Web Programming"
+        I am a student at the Ahsanullah University of Science and Technology. I am currently in my sophomore year and am taking a class called "Web Programming"
     </p>
     <p class="">I <em>love</em></p>
     <a href="mailto:ponkidagreat@gmail.com">Mail me</a>
+    <br />
+    <br />
+    <ol class="pseudo">
+        <li>Love to talk</li>
+        <li>Love to make people smile</li>
+        <li>Animal lover</li>
+    </ol>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <table>
+        <thead>
+            <tr>
+                <th>Institution Name</th>
+                <th>Passing year</th>
+                <th>GPA</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>AUST</td>
+                <td>2025</td>
+                <td>3.95</td>
+            </tr>
+            <tr>
+                <td>City College</td>
+                <td>2020</td>
+                <td>5.00</td>
+            </tr>
+            <tr>
+                <td>Udayan UcchaMaddhomik</td>
+                <td>2018</td>
+                <td>5.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br />
+    <h2>Contact Me</h2>
+
+    <form action="process.php " method="POST ">
+        <div>
+            <label>First Name: </label>
+            <input type="text " name="firstName " placeholder="Enter first name " />
+        </div>
+        <br />
+        <div>
+            <label>Last Name: </label>
+            <input type="text " name="lastName " placeholder="Enter last name " />
+        </div>
+        <br />
+        <div>
+            <label>Email: </label>
+            <input type="email " name="email " placeholder="Enter Email address " />
+        </div>
+        <br />
+        <div>
+            <label>Message: </label>
+            <textarea name="message " placeholder="Enter your message "></textarea>
+        </div>
+        <br />
+        <div>
+            <label>Gender: </label>
+            <select name="gender ">
+          <option value="male ">Male</option>
+          <option value="female ">Female</option>
+          <option value="other ">Other</option>
+        </select>
+        </div>
+        <br />
+        <div>
+            <label>Age: </label>
+            <input type="number " name="age " placeholder="Enter first name " value="30 " />
+        </div>
+        <br />
+        <div>
+            <label>Birthday: </label>
+            <input type="date " name="birthday " placeholder="dd/mm/yyyy " />
+        </div>
+        <br />
+        <button ">Submit</button>
+    </form>
+
+    <br />
+    <footer id="main-footer ">
+		<p>Copyright &copy; 2017, My Website</p>
+	</footer>
+    <div>
+        <?php
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $email = $_POST['email'];
+        $message = $_POST['message'];
+        $
+        ?>
+        
+    </div>
+    <script src="js/index.js "></script>
 </body>
 
 </html>
