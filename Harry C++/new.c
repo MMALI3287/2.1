@@ -16,5 +16,6 @@ int main()
 for l in range(i+1):
     j=j*l
 print(j) 
+
 return 0;
 }
