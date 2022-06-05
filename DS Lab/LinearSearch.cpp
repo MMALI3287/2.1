@@ -14,7 +14,7 @@ int main()
     }
     cout << "Input key: " << endl;
     cin >> key;
-    for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+    for (int i = 0; i < sizeof(arr) / sizeof(arr[1]); i++)
     {
         if (arr[i] == key)
         {
@@ -25,6 +25,5 @@ int main()
     }
     if (flag == 0)
         cout << "Key not found " << endl;
-
     return 0;
 }
