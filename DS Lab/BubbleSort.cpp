@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main()
+int main() // Bubble Sort
 {
     int n;
     cout << "Enter the number of elements: ";

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main()
+int main() // Insertion Sort
 {
     int n;
     cout << "Enter the number of elements: ";
@@ -17,7 +17,7 @@ int main()
         int current = arr[i];
         int j = i - 1;
         while (j >= 0 && arr[j] > current)
-            arr[i] = arr[j--];
+            arr[j + 1] = arr[j--];
         arr[j + 1] = current;
     }
     cout << "Sorted array: ";
