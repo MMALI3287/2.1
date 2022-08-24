@@ -11,10 +11,10 @@ int precedence(char c)
         return 0;
 }
 
-void infixToPostfix(string infix, string &postfix)
+string infixToPostfix(string infix)
 {
     stack<char> s;
-    postfix = "";
+    string postfix = "";
     for (int i = 0; i < infix.length(); i++)
     {
         if (infix[i] == '(')
@@ -49,144 +49,189 @@ void infixToPostfix(string infix, string &postfix)
         postfix += s.top();
         s.pop();
     }
+    return postfix;
 }
 
-void postfixToInfix(string postfix, string &infix)
+string postfixToInfix(string postfix)
 {
-    stack<char> s;
-    infix = "";
+    stack<string> s;
     for (int i = 0; i < postfix.length(); i++)
     {
-        if (postfix[i] == '+' || postfix[i] == '-' || postfix[i] == '*' || postfix[i] == '/')
+        if (postfix[i] >= '0' && postfix[i] <= '9')
         {
-            infix += " ";
-            infix += postfix[i];
-            infix += " ";
+            string temp(1, postfix[i]);
+            s.push(temp);
         }
         else
         {
-            infix += postfix[i];
+            string temp = s.top();
+            s.pop();
+            string temp2 = s.top();
+            s.pop();
+            s.push("(" + temp2 + postfix[i] + temp + ")");
+        }
+    }
+    return s.top();
+}
+
+string infixToPrefix(string infix)
+{
+    reverse(infix.begin(), infix.end());
+    string prefix = "";
+    stack<char> s;
+    for (int i = 0; i < infix.length(); i++)
+    {
+        if (infix[i] == '(')
+            infix[i] = ')';
+        else if (infix[i] == ')')
+            infix[i] = '(';
+    }
+    for (int i = 0; i < infix.length(); i++)
+    {
+        if (infix[i] >= '0' && infix[i] <= '9')
+        {
+            prefix += infix[i];
+        }
+        else if (infix[i] == '(')
+        {
+            s.push('(');
+        }
+        else if (infix[i] == ')')
+        {
+            while (!s.empty() && s.top() != '(')
+            {
+                prefix += s.top();
+                s.pop();
+            }
+            s.pop();
+        }
+        else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/')
+        {
+            while (!s.empty() && s.top() != '(' && precedence(infix[i]) <= precedence(s.top()))
+            {
+                prefix += s.top();
+                s.pop();
+            }
+            s.push(infix[i]);
+        }
+        else
+        {
+            prefix += infix[i];
         }
     }
     while (!s.empty())
     {
-        infix += " ";
-        infix += s.top();
+        prefix += s.top();
         s.pop();
     }
+    reverse(prefix.begin(), prefix.end());
+    return prefix;
 }
 
-void InfixToPrefix(string infix, string &prefix)
+int infixEvaluation(string infix)
 {
-    string postfix;
-    infixToPostfix(infix, postfix);
-    postfixToInfix(postfix, prefix);
-}
-
-void infixEvaluation(string infix, int &result)
-{
-    string postfix;
-    infixToPostfix(infix, postfix);
-    stack<int> s;
-    for (int i = 0; i < postfix.length(); i++)
+    // infix = "(" + infix + ")";
+    stack<int> operand;
+    stack<char> operator1;
+    for (int i = 0; i < infix.length(); i++)
     {
-        if (postfix[i] >= '0' && postfix[i] <= '9')
+        if (infix[i] >= '0' && infix[i] <= '9')
         {
-            s.push(postfix[i] - '0');
+            operand.push(infix[i] - '0');
         }
-        else
+        else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/')
         {
-            int a = s.top();
-            s.pop();
-            int b = s.top();
-            s.pop();
-            switch (postfix[i])
+            operator1.push(infix[i]);
+        }
+        else if (infix[i] == ')')
+        {
+            char op = operator1.top();
+            operator1.pop();
+            int op1 = operand.top();
+            operand.pop();
+            int op2 = operand.top();
+            operand.pop();
+            if (op == '+')
             {
-            case '+':
-                s.push(b + a);
-                break;
-            case '-':
-                s.push(b - a);
-                break;
-            case '*':
-                s.push(b * a);
-                break;
-            case '/':
-                s.push(b / a);
-                break;
+                operand.push(op2 + op1);
+            }
+            else if (op == '-')
+            {
+                operand.push(op2 - op1);
+            }
+            else if (op == '*')
+            {
+                operand.push(op2 * op1);
+            }
+            else if (op == '/')
+            {
+                operand.push(op2 / op1);
             }
         }
     }
-    result = s.top();
+    return operand.top();
 }
 
-void postfixEvaluation(string postfix, int &result)
+int postfixEvaluation(string postfix)
 {
     stack<int> s;
     for (int i = 0; i < postfix.length(); i++)
     {
-        if (postfix[i] >= '0' && postfix[i] <= '9')
+        if (postfix[i] == '+' || postfix[i] == '-' || postfix[i] == '*' || postfix[i] == '/')
         {
-            s.push(postfix[i] - '0');
+            int c1 = s.top();
+            s.pop();
+            int c2 = s.top();
+            s.pop();
+            if (postfix[i] == '+')
+            {
+                s.push(c2 + c1);
+            }
+            else if (postfix[i] == '-')
+            {
+                s.push(c2 - c1);
+            }
+            else if (postfix[i] == '*')
+            {
+                s.push(c2 * c1);
+            }
+            else if (postfix[i] == '/')
+            {
+                s.push(c2 / c1);
+            }
         }
         else
         {
-            int a = s.top();
-            s.pop();
-            int b = s.top();
-            s.pop();
-            switch (postfix[i])
-            {
-            case '+':
-                s.push(b + a);
-                break;
-            case '-':
-                s.push(b - a);
-                break;
-            case '*':
-                s.push(b * a);
-                break;
-            case '/':
-                s.push(b / a);
-                break;
-            }
+            s.push(postfix[i] - '0');
         }
     }
-    result = s.top();
+    return s.top();
 }
 
 int main()
 {
-    string postfix, infix, prefix;
-    int result;
-
-    cout << "Enter the infix expression: ";
+    string infix;
+    cout << "Input infix expression: ";
     cin >> infix;
-    cout << "Infix expression: " << infix << endl;
-    cout << "Infix evaluation: ";
-    infixEvaluation(infix, result);
-    cout << result << endl;
-    infixToPostfix(infix, postfix);
-    cout << "Postfix expression: " << postfix << endl;
-    postfixEvaluation(postfix, result);
-    cout << "Postfix evaluation: " << result << endl;
+    cout << "Infix Expression: " << infix << endl;
+    cout << "Infix Evaluation: " << infixEvaluation(infix) << endl;
+    cout << "Postfix Expression: " << infixToPostfix(infix) << endl;
+    cout << "Postfix Evaluation: " << postfixEvaluation(infixToPostfix(infix)) << endl
+         << endl;
 
+    string postfix;
     cout << "Enter the postfix expression: ";
     cin >> postfix;
-    cout << "Postfix expression: " << postfix << endl;
-    cout << "Postfix evaluation: ";
-    postfixEvaluation(postfix, result);
-    cout << result << endl;
-    postfixToInfix(postfix, infix);
-    cout << "Infix expression: " << infix << endl;
-    infixEvaluation(infix, result);
-    cout << "Infix evaluation: " << result << endl;
+    cout << "Postfix Expression: " << postfix << endl;
+    cout << "Postfix Evaluation: " << postfixEvaluation(postfix) << endl;
+    cout << "Infix Expression: " << postfixToInfix(postfix) << endl;
+    cout << "Infix Evaluation: " << infixEvaluation(postfixToInfix(postfix)) << endl
+         << endl;
 
     cout << "Enter the infix expression: ";
     cin >> infix;
     cout << "Infix expression: " << infix << endl;
-    InfixToPrefix(infix, prefix);
-    cout << "Prefix expression: " << prefix << endl;
+    cout << "Prefix expression: " << infixToPrefix(infix) << endl;
 
     return 0;
 }
