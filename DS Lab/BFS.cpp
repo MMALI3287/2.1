@@ -3,8 +3,6 @@ using namespace std;
 
 int graph[200][200];
 int status[200];
-int level[200][200];
-int lev = -1;
 struct node
 {
     int val;
@@ -95,25 +93,6 @@ void addNeighbors(int nodeN, int n)
         }
     }
 }
-int Level(int nodeN, int n)
-{
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= n; j++)
-        {
-            level[i][j] = -1;
-        }
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        if (level[nodeN][i] == -1)
-        {
-            lev++;
-            level[nodeN][i] = lev;
-        }
-    }
-    return lev;
-}
 void bfs(int source, int n)
 {
     // step 1
@@ -130,7 +109,6 @@ void bfs(int source, int n)
         int N;
         N = dequeue();
         cout << N << ": ";
-        cout << Level(N, n) << endl;
         status[N] = 3;
 
         // step 5
