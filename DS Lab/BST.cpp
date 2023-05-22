@@ -291,3 +291,36 @@ struct BST
         }
     }
 };
+int main()
+{
+    BST bt;
+    bt.insert(10);
+    bt.insert(5);
+    bt.insert(15);
+    bt.insert(3);
+    bt.insert(7);
+    bt.insert(12);
+    bt.insert(18);
+    bt.insert(1);
+    bt.insert(4);
+    bt.insert(6);
+    bt.insert(8);
+    bt.insert(11);
+    bt.insert(13);
+    bt.insert(16);
+    bt.insert(19);
+    bt.insert(2);
+    bt.insert(9);
+    bt.insert(14);
+    bt.insert(17);
+    bt.insert(20);
+    bt.deleteNode(10);
+    bt.findHeightIterative(bt.root);
+    bt.findLCA(bt.root, 1, 2);
+    bt.findLCAIterative(bt.root, 1, 2);
+    bt.findDistance(bt.root, 1, 2);
+    bt.findDistanceIterative(bt.root, 1, 2);
+    bt.findDistanceK(bt.root, 1, 2, 2);
+    bt.findDistanceKIterative(bt.root, 1, 2, 2);
+    return 0;
+}
